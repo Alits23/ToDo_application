@@ -1,21 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:note_application/student.dart';
+import 'package:note_application/add_task_page.dart';
 
-import 'car.dart';
 import 'home_page.dart';
-import 'user.dart';
+import 'task.dart';
 
 void main() async {
   await Hive.initFlutter();
-  await Hive.openBox('names');
-  Hive.registerAdapter(CarAdapter());
-  await Hive.openBox<Car>('carBox');
-  Hive.registerAdapter(StudentAdapter());
-  await Hive.openBox<Student>('student');
 
-  Hive.registerAdapter(UserAdapter());
-  await Hive.openBox<User>('user');
+  Hive.registerAdapter(TaskAdapter());
+  await Hive.openBox<Task>('taskBox');
   runApp(MyApp());
 }
 
@@ -25,7 +19,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: 'SM',
+        textTheme: TextTheme(
+          headline4: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+      ),
+      home: AddTaskPage(),
     );
   }
 }
