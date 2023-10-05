@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:note_application/car.dart';
+import 'package:note_application/student.dart';
+import 'package:note_application/user.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,57 +12,36 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String inputText = '';
   var controller = TextEditingController();
   var box = Hive.box('names');
+  var carBox = Hive.box<Car>('carBox');
+  var studentBox = Hive.box<Student>('student');
+  var user = Hive.box<User>('user');
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: controller,
-            ),
-            Text(inputText),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.amber,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Checkbox(
+                    value: false,
+                    onChanged: (value) {
+                      value = value!;
+                    },
+                  ),
+                ],
               ),
-              onPressed: () {
-                setState(() {
-                  inputText = controller.text;
-                });
-              },
-              child: Text('Read'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                box.put(1, 'Ali');
-              },
-              child: Text('Create'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                var text = box.get(1);
-                print(text);
-              },
-              child: Text('read'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                box.put(1, 'tashakkori');
-              },
-              child: Text('Update'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                box.delete(1);
-              },
-              child: Text('Delete'),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
