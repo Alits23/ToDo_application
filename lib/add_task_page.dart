@@ -135,8 +135,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
   }
 
   addTask(String TaskTitle, String TaskSubTitle) {
-    var task = Task(title: TaskTitle, subTitle: TaskSubTitle);
-    // taskBox.add(task);
-    taskBox.add(task);
+    taskBox.add(
+      Task(title: TaskTitle, subTitle: TaskSubTitle),
+    );
   }
 }
