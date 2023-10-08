@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:msh_checkbox/msh_checkbox.dart';
 import 'package:note_application/task.dart';
 
 import 'constants/colors.dart';
@@ -13,7 +12,13 @@ class TaskWidget extends StatefulWidget {
 }
 
 class _TaskWidgetState extends State<TaskWidget> {
-  var isDone = false;
+  var isBoxChecked = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    isBoxChecked = widget.task.isDone;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +29,14 @@ class _TaskWidgetState extends State<TaskWidget> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          isDone = !isDone;
+          isBoxChecked = !isBoxChecked;
+          widget.task.isDone = isBoxChecked;
+          widget.task.save();
         });
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        height: 132,
+        height: 140,
         width: double.infinity,
         decoration: BoxDecoration(
           color: colorContainer,
@@ -54,25 +61,30 @@ class _TaskWidgetState extends State<TaskWidget> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MSHCheckbox(
-                    size: 32,
-                    value: isDone,
-                    colorConfig: MSHColorConfig.fromCheckedUncheckedDisabled(
-                      checkedColor: color1,
-                    ),
-                    style: MSHCheckboxStyle.fillScaleCheck,
-                    onChanged: (selected) {
+                  Checkbox(
+                    value: isBoxChecked,
+                    onChanged: (value) {
                       setState(
                         () {
-                          isDone = selected;
+                          isBoxChecked = !isBoxChecked;
+                          widget.task.isDone = isBoxChecked;
+                          widget.task.save();
                         },
                       );
                     },
                   ),
-                  Text(widget.task.title.toString()),
+                  Text(
+                    widget.task.title.toString(),
+                    overflow: TextOverflow.ellipsis,
+                    textDirection: TextDirection.rtl,
+                  ),
                 ],
               ),
-              Text(widget.task.subTitle.toString()),
+              Text(
+                widget.task.subTitle.toString(),
+                overflow: TextOverflow.ellipsis,
+                textDirection: TextDirection.rtl,
+              ),
               Spacer(),
               getTimeAndEdit(),
             ],
