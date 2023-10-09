@@ -35,7 +35,7 @@ class _TaskWidgetState extends State<TaskWidget> {
         });
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        margin: EdgeInsets.symmetric(horizontal: 18, vertical: 12),
         height: 140,
         width: double.infinity,
         decoration: BoxDecoration(
@@ -126,7 +126,7 @@ class _TaskWidgetState extends State<TaskWidget> {
           ),
         ),
         SizedBox(
-          width: 15,
+          width: 10,
         ),
         Container(
           width: 93,

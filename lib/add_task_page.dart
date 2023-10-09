@@ -116,6 +116,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 String TaskTitle = controllerTaskTitle.text;
                 String TaskSubTitle = controllerTaskSubTitle.text;
                 addTask(TaskTitle, TaskSubTitle);
+                Navigator.of(context).pop();
               },
               child: Text(
                 'اضافه کردن تسک',
