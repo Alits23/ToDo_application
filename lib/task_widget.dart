@@ -117,7 +117,12 @@ class _TaskWidgetState extends State<TaskWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('10:10'),
+                Text(
+                  '${widget.task.time.hour}:${widget.task.time.minute}',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
                 SizedBox(
                   width: 10,
                 ),
