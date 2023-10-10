@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_application/edit_task.page.dart';
 import 'package:note_application/task.dart';
 
 import 'constants/colors.dart';
@@ -128,22 +129,29 @@ class _TaskWidgetState extends State<TaskWidget> {
         SizedBox(
           width: 10,
         ),
-        Container(
-          width: 93,
-          height: 28,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
-            color: color2,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('ویرایش'),
-              SizedBox(
-                width: 10,
-              ),
-              Image.asset('images/icon_edit.png'),
-            ],
+        InkWell(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => EditTaskpage(task: widget.task),
+            ));
+          },
+          child: Container(
+            width: 93,
+            height: 28,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(18),
+              color: color2,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('ویرایش'),
+                SizedBox(
+                  width: 10,
+                ),
+                Image.asset('images/icon_edit.png'),
+              ],
+            ),
           ),
         ),
       ],

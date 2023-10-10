@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
               itemCount: taskBox.values.length,
               itemBuilder: (context, index) {
                 var task = taskBox.values.toList()[index];
-                return TaskWidget(task: task);
+                return getTaskWidget(task);
               },
             ),
           );
@@ -65,5 +65,14 @@ class _HomePageState extends State<HomePage> {
             child: Image.asset('images/icon_add.png')),
       ),
     );
+  }
+
+  Widget getTaskWidget(Task task) {
+    return Dismissible(
+        key: UniqueKey(),
+        onDismissed: (direction) {
+          task.delete();
+        },
+        child: TaskWidget(task: task));
   }
 }
