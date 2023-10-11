@@ -17,6 +17,7 @@ class _EditTaskpageState extends State<EditTaskpage> {
   TextEditingController? controllerTaskTitle;
   TextEditingController? controllerTaskSubTitle;
   final taskBox = Hive.box<Task>('taskBox');
+  DateTime? _time;
   @override
   void initState() {
     super.initState();
@@ -134,7 +135,7 @@ class _EditTaskpageState extends State<EditTaskpage> {
                     fontWeight: FontWeight.bold,
                   ),
                   onPositivePressed: (context, time) {
-                    widget.task.time = time;
+                    _time = time;
                   },
                   onNegativePressed: (context) {},
                 ),
@@ -172,6 +173,7 @@ class _EditTaskpageState extends State<EditTaskpage> {
   editTask(String TaskTitle, String TaskSubTitle) {
     widget.task.title = TaskTitle;
     widget.task.subTitle = TaskSubTitle;
+    widget.task.time = _time!;
     widget.task.save();
   }
 }

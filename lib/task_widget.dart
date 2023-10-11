@@ -118,7 +118,7 @@ class _TaskWidgetState extends State<TaskWidget> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '${widget.task.time.hour}:${widget.task.time.minute}',
+                  '${widget.task.time.hour}:${getMinUnderTen(widget.task.time)}',
                   style: TextStyle(
                     color: Colors.white,
                   ),
@@ -161,5 +161,14 @@ class _TaskWidgetState extends State<TaskWidget> {
         ),
       ],
     );
+  }
+
+  // برای باگ نمایش ندادن صفر قبل از دقیقه 0تا9
+  String getMinUnderTen(DateTime time) {
+    if (time.minute < 10) {
+      return '0${time.minute}';
+    } else {
+      return time.minute.toString();
+    }
   }
 }
