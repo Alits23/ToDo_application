@@ -37,14 +37,15 @@ class _EditTaskpageState extends State<EditTaskpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(
-                  height: 50,
+                  height: 10,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 44),
@@ -79,7 +80,7 @@ class _EditTaskpageState extends State<EditTaskpage> {
                   ),
                 ),
                 SizedBox(
-                  height: 60,
+                  height: 25,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 44),
@@ -139,7 +140,6 @@ class _EditTaskpageState extends State<EditTaskpage> {
                   },
                   onNegativePressed: (context) {},
                 ),
-                Spacer(),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(200, 48),

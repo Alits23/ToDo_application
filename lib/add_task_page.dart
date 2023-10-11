@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:note_application/constants/colors.dart';
 import 'package:note_application/task.dart';
+import 'package:note_application/task_type.dart';
+import 'package:note_application/utility.dart';
 import 'package:time_pickerr/time_pickerr.dart';
 
 class AddTaskPage extends StatefulWidget {
@@ -19,6 +21,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
   final taskBox = Hive.box<Task>('taskBox');
   DateTime? _time;
+  int _selectedTypeTaskItem = 0;
   @override
   void initState() {
     super.initState();
@@ -34,15 +37,15 @@ class _AddTaskPageState extends State<AddTaskPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
             child: Column(
-              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox(
-                  height: 50,
+                  height: 10,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 44),
@@ -52,7 +55,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       controller: controllerTaskTitle,
                       focusNode: negahban1,
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(15),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 15,
+                          vertical: 15,
+                        ),
                         labelText: 'موضوع تسک',
                         labelStyle: TextStyle(
                           fontSize: 20,
@@ -77,7 +83,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   ),
                 ),
                 SizedBox(
-                  height: 60,
+                  height: 25,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 44),
@@ -137,7 +143,31 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   },
                   onNegativePressed: (context) {},
                 ),
-                Spacer(),
+                Container(
+                  height: 190,
+                  child: ListView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: getTaskTypeList().length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          setState(() {
+                            _selectedTypeTaskItem = index;
+                          });
+                        },
+                        child: TaskTypeItemList(
+                          taskType: getTaskTypeList()[index],
+                          index: index,
+                          selectedTypeTaskItem: _selectedTypeTaskItem,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(200, 48),
@@ -171,6 +201,38 @@ class _AddTaskPageState extends State<AddTaskPage> {
   addTask(String TaskTitle, String TaskSubTitle) {
     taskBox.add(
       Task(title: TaskTitle, subTitle: TaskSubTitle, time: _time!),
+    );
+  }
+}
+
+class TaskTypeItemList extends StatelessWidget {
+  TaskTypeItemList({
+    super.key,
+    required this.taskType,
+    required this.index,
+    required this.selectedTypeTaskItem,
+  });
+  TaskType taskType;
+  int index;
+  int selectedTypeTaskItem;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: (selectedTypeTaskItem == index) ? 3 : 2,
+          color: (selectedTypeTaskItem == index) ? color1 : color3,
+        ),
+        borderRadius: BorderRadius.circular(18),
+      ),
+      margin: EdgeInsets.all(8),
+      width: 140,
+      child: Column(
+        children: [
+          Image.asset(taskType.image),
+          Text(taskType.title),
+        ],
+      ),
     );
   }
 }
