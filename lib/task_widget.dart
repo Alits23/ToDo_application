@@ -94,7 +94,7 @@ class _TaskWidgetState extends State<TaskWidget> {
         SizedBox(
           width: 20,
         ),
-        Image.asset('images/workout.png'),
+        Image.asset(widget.task.taskType.image),
       ],
     );
   }

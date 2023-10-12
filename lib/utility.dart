@@ -20,7 +20,7 @@ List<TaskType> getTaskTypeList() {
     ),
     TaskType(
       image: 'images/banking.png',
-      title: 'کار اداری',
+      title: 'یادداشت مالی',
       taskTypeEnum: TaskTypeEnum.OfficeWork,
     ),
     TaskType(

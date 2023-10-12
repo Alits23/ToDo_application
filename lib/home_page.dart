@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:note_application/add_task_page.dart';
 import 'package:note_application/constants/colors.dart';
+import 'package:note_application/task_type.dart';
 import 'package:note_application/task_widget.dart';
 
 import 'task.dart';
@@ -45,6 +46,7 @@ class _HomePageState extends State<HomePage> {
                 itemCount: taskBox.values.length,
                 itemBuilder: (context, index) {
                   var task = taskBox.values.toList()[index];
+                  print(task.taskType.title);
                   return getTaskWidget(task);
                 },
               ),

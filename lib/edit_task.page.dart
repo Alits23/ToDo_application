@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:note_application/constants/colors.dart';
 import 'package:note_application/task.dart';
+import 'package:note_application/task_type.dart';
+import 'package:note_application/utility.dart';
 import 'package:time_pickerr/time_pickerr.dart';
 
 class EditTaskpage extends StatefulWidget {
@@ -18,6 +20,8 @@ class _EditTaskpageState extends State<EditTaskpage> {
   TextEditingController? controllerTaskSubTitle;
   final taskBox = Hive.box<Task>('taskBox');
   DateTime? _time;
+  int _selectedTypeTaskItem = 0;
+
   @override
   void initState() {
     super.initState();
@@ -140,6 +144,31 @@ class _EditTaskpageState extends State<EditTaskpage> {
                   },
                   onNegativePressed: (context) {},
                 ),
+                Container(
+                  height: 190,
+                  child: ListView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 18),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: getTaskTypeList().length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          setState(() {
+                            _selectedTypeTaskItem = index;
+                          });
+                        },
+                        child: TaskTypeItemList(
+                          taskType: getTaskTypeList()[index],
+                          index: index,
+                          selectedTypeTaskItem: _selectedTypeTaskItem,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     minimumSize: Size(200, 48),
@@ -174,6 +203,39 @@ class _EditTaskpageState extends State<EditTaskpage> {
     widget.task.title = TaskTitle;
     widget.task.subTitle = TaskSubTitle;
     widget.task.time = _time!;
+    widget.task.taskType = getTaskTypeList()[_selectedTypeTaskItem];
     widget.task.save();
+  }
+}
+
+class TaskTypeItemList extends StatelessWidget {
+  TaskTypeItemList({
+    super.key,
+    required this.taskType,
+    required this.index,
+    required this.selectedTypeTaskItem,
+  });
+  TaskType taskType;
+  int index;
+  int selectedTypeTaskItem;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: (selectedTypeTaskItem == index) ? 3 : 2,
+          color: (selectedTypeTaskItem == index) ? color1 : color3,
+        ),
+        borderRadius: BorderRadius.circular(18),
+      ),
+      margin: EdgeInsets.all(8),
+      width: 140,
+      child: Column(
+        children: [
+          Image.asset(taskType.image),
+          Text(taskType.title),
+        ],
+      ),
+    );
   }
 }

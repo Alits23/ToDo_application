@@ -204,7 +204,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
           title: TaskTitle,
           subTitle: TaskSubTitle,
           time: _time!,
-          taskType: getTaskTypeList()[0]),
+          taskType: getTaskTypeList()[_selectedTypeTaskItem]),
     );
   }
 }
