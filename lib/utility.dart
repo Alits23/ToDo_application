@@ -18,6 +18,16 @@ List<TaskType> getTaskTypeList() {
       title: 'دورهمی دوستانه',
       taskTypeEnum: TaskTypeEnum.friendlyDate,
     ),
+    TaskType(
+      image: 'images/banking.png',
+      title: 'کار اداری',
+      taskTypeEnum: TaskTypeEnum.OfficeWork,
+    ),
+    TaskType(
+      image: 'images/work_meeting.png',
+      title: 'قرار کاری',
+      taskTypeEnum: TaskTypeEnum.OfficeWork,
+    ),
   ];
   return list;
 }

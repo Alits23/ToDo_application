@@ -22,35 +22,36 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: backgroundColor1,
       body: Center(
-          child: ValueListenableBuilder(
-        valueListenable: taskBox.listenable(),
-        builder: (context, value, child) {
-          return NotificationListener<UserScrollNotification>(
-            onNotification: (notification) {
-              setState(() {
-                if (notification.direction == ScrollDirection.forward) {
-                  isFabVisible = true;
-                }
-                if (notification.direction == ScrollDirection.reverse) {
-                  isFabVisible = false;
-                }
-                if (notification.direction == ScrollDirection.idle) {
-                  isFabVisible = true;
-                }
-              });
-              //not a matter return if is false or true
-              return true;
-            },
-            child: ListView.builder(
-              itemCount: taskBox.values.length,
-              itemBuilder: (context, index) {
-                var task = taskBox.values.toList()[index];
-                return getTaskWidget(task);
+        child: ValueListenableBuilder(
+          valueListenable: taskBox.listenable(),
+          builder: (context, value, child) {
+            return NotificationListener<UserScrollNotification>(
+              onNotification: (notification) {
+                setState(() {
+                  if (notification.direction == ScrollDirection.forward) {
+                    isFabVisible = true;
+                  }
+                  if (notification.direction == ScrollDirection.reverse) {
+                    isFabVisible = false;
+                  }
+                  if (notification.direction == ScrollDirection.idle) {
+                    isFabVisible = true;
+                  }
+                });
+                //not a matter return if is false or true
+                return true;
               },
-            ),
-          );
-        },
-      )),
+              child: ListView.builder(
+                itemCount: taskBox.values.length,
+                itemBuilder: (context, index) {
+                  var task = taskBox.values.toList()[index];
+                  return getTaskWidget(task);
+                },
+              ),
+            );
+          },
+        ),
+      ),
       floatingActionButton: Visibility(
         visible: isFabVisible,
         child: FloatingActionButton(

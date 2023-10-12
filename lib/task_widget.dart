@@ -120,6 +120,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                 Text(
                   '${widget.task.time.hour}:${getMinUnderTen(widget.task.time)}',
                   style: TextStyle(
+                    fontSize: 16,
                     color: Colors.white,
                   ),
                 ),

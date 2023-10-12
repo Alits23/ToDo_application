@@ -200,7 +200,11 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
   addTask(String TaskTitle, String TaskSubTitle) {
     taskBox.add(
-      Task(title: TaskTitle, subTitle: TaskSubTitle, time: _time!),
+      Task(
+          title: TaskTitle,
+          subTitle: TaskSubTitle,
+          time: _time!,
+          taskType: getTaskTypeList()[0]),
     );
   }
 }
