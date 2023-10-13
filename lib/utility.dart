@@ -10,7 +10,7 @@ List<TaskType> getTaskTypeList() {
     ),
     TaskType(
       image: 'images/meditate.png',
-      title: 'تمرکز',
+      title: 'استراحت',
       taskTypeEnum: TaskTypeEnum.focus,
     ),
     TaskType(

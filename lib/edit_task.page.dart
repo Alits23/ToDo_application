@@ -6,6 +6,8 @@ import 'package:note_application/task_type.dart';
 import 'package:note_application/utility.dart';
 import 'package:time_pickerr/time_pickerr.dart';
 
+import 'task_type_item_liste.dart';
+
 class EditTaskpage extends StatefulWidget {
   EditTaskpage({super.key, required this.task});
   Task task;
@@ -210,37 +212,5 @@ class _EditTaskpageState extends State<EditTaskpage> {
     widget.task.time = _time!;
     widget.task.taskType = getTaskTypeList()[_selectedTypeTaskItem];
     widget.task.save();
-  }
-}
-
-class TaskTypeItemList extends StatelessWidget {
-  TaskTypeItemList({
-    super.key,
-    required this.taskType,
-    required this.index,
-    required this.selectedTypeTaskItem,
-  });
-  TaskType taskType;
-  int index;
-  int selectedTypeTaskItem;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          width: (selectedTypeTaskItem == index) ? 3 : 2,
-          color: (selectedTypeTaskItem == index) ? color1 : color3,
-        ),
-        borderRadius: BorderRadius.circular(18),
-      ),
-      margin: EdgeInsets.all(8),
-      width: 140,
-      child: Column(
-        children: [
-          Image.asset(taskType.image),
-          Text(taskType.title),
-        ],
-      ),
-    );
   }
 }
