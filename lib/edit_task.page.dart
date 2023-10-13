@@ -21,7 +21,7 @@ class _EditTaskpageState extends State<EditTaskpage> {
   final taskBox = Hive.box<Task>('taskBox');
   DateTime? _time;
   int _selectedTypeTaskItem = 0;
-
+  bool _selectedTimeColor = false;
   @override
   void initState() {
     super.initState();
@@ -43,6 +43,7 @@ class _EditTaskpageState extends State<EditTaskpage> {
       },
     );
     _selectedTypeTaskItem = index;
+    _time = widget.task.time;
   }
 
   @override
@@ -127,7 +128,8 @@ class _EditTaskpageState extends State<EditTaskpage> {
                   ),
                 ),
                 CustomHourPicker(
-                  elevation: 2,
+                  elevation: 5,
+                  date: widget.task.time,
                   title: 'انتخاب کردن زمان',
                   titleStyle: TextStyle(
                     color: color1,
@@ -136,20 +138,16 @@ class _EditTaskpageState extends State<EditTaskpage> {
                   ),
                   positiveButtonText: 'انتخاب زمان',
                   positiveButtonStyle: TextStyle(
-                    color: color1,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  negativeButtonText: 'لغو',
-                  negativeButtonStyle: TextStyle(
-                    color: Colors.grey,
+                    color: _selectedTimeColor ? color1 : Colors.grey,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                   onPositivePressed: (context, time) {
                     _time = time;
+                    setState(() {
+                      _selectedTimeColor = true;
+                    });
                   },
-                  onNegativePressed: (context) {},
                 ),
                 Container(
                   height: 190,
