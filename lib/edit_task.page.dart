@@ -36,6 +36,13 @@ class _EditTaskpageState extends State<EditTaskpage> {
     negahban2.addListener(() {
       setState(() {});
     });
+
+    var index = getTaskTypeList().indexWhere(
+      (element) {
+        return element.image == widget.task.taskType.image;
+      },
+    );
+    _selectedTypeTaskItem = index;
   }
 
   @override

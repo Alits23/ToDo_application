@@ -28,6 +28,11 @@ List<TaskType> getTaskTypeList() {
       title: 'قرار کاری',
       taskTypeEnum: TaskTypeEnum.OfficeWork,
     ),
+    TaskType(
+      image: 'images/workout.png',
+      title: 'ورزش کردن',
+      taskTypeEnum: TaskTypeEnum.OfficeWork,
+    ),
   ];
   return list;
 }
