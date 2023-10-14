@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:note_application/add_task_page.dart';
-import 'package:note_application/task_type.dart';
-import 'package:note_application/type_enum.dart';
-
-import 'home_page.dart';
-import 'task.dart';
+import 'data/task.dart';
+import 'data/task_type.dart';
+import 'data/type_enum.dart';
+import 'screens/home_page.dart';
 
 void main() async {
   await Hive.initFlutter();

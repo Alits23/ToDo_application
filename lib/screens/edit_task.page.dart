@@ -1,39 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:note_application/constants/colors.dart';
-import 'package:note_application/task.dart';
-import 'package:note_application/task_type.dart';
-import 'package:note_application/utility.dart';
+import 'package:note_application/utility/utility.dart';
 import 'package:time_pickerr/time_pickerr.dart';
+import '../data/task.dart';
+import '../widget/task_type_item_liste.dart';
 
-import 'task_type_item_liste.dart';
-
-class AddTaskPage extends StatefulWidget {
-  const AddTaskPage({super.key});
-
+class EditTaskpage extends StatefulWidget {
+  EditTaskpage({super.key, required this.task});
+  Task task;
   @override
-  State<AddTaskPage> createState() => _AddTaskPageState();
+  State<EditTaskpage> createState() => _EditTaskpageState();
 }
 
-class _AddTaskPageState extends State<AddTaskPage> {
+class _EditTaskpageState extends State<EditTaskpage> {
   FocusNode negahban1 = FocusNode();
   FocusNode negahban2 = FocusNode();
-  final TextEditingController controllerTaskTitle = TextEditingController();
-  final TextEditingController controllerTaskSubTitle = TextEditingController();
-
+  TextEditingController? controllerTaskTitle;
+  TextEditingController? controllerTaskSubTitle;
   final taskBox = Hive.box<Task>('taskBox');
   DateTime? _time;
   int _selectedTypeTaskItem = 0;
+  bool _selectedTimeColor = false;
   @override
   void initState() {
     super.initState();
     // TODO: implement initState
+
+    controllerTaskTitle = TextEditingController(text: widget.task.title);
+    controllerTaskSubTitle = TextEditingController(text: widget.task.subTitle);
+
     negahban1.addListener(() {
       setState(() {});
     });
     negahban2.addListener(() {
       setState(() {});
     });
+
+    var index = getTaskTypeList().indexWhere(
+      (element) {
+        return element.image == widget.task.taskType.image;
+      },
+    );
+    _selectedTypeTaskItem = index;
+    _time = widget.task.time;
   }
 
   @override
@@ -57,10 +67,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       controller: controllerTaskTitle,
                       focusNode: negahban1,
                       decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 15,
-                        ),
+                        contentPadding: EdgeInsets.all(15),
                         labelText: 'موضوع تسک',
                         labelStyle: TextStyle(
                           fontSize: 20,
@@ -97,7 +104,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                       focusNode: negahban2,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(15),
-                        labelText: 'درباره تسک',
+                        labelText: 'توضیحات تسک',
                         labelStyle: TextStyle(
                           fontSize: 20,
                           color: negahban2.hasFocus ? color1 : color3,
@@ -121,7 +128,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   ),
                 ),
                 CustomHourPicker(
-                  elevation: 2,
+                  elevation: 5,
+                  date: widget.task.time,
                   title: 'انتخاب کردن زمان',
                   titleStyle: TextStyle(
                     color: color1,
@@ -130,20 +138,16 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   ),
                   positiveButtonText: 'انتخاب زمان',
                   positiveButtonStyle: TextStyle(
-                    color: color1,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  negativeButtonText: 'لغو',
-                  negativeButtonStyle: TextStyle(
-                    color: Colors.redAccent,
+                    color: _selectedTimeColor ? color1 : Colors.grey,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                   onPositivePressed: (context, time) {
                     _time = time;
+                    setState(() {
+                      _selectedTimeColor = true;
+                    });
                   },
-                  onNegativePressed: (context) {},
                 ),
                 Container(
                   height: 190,
@@ -176,13 +180,13 @@ class _AddTaskPageState extends State<AddTaskPage> {
                     backgroundColor: color1,
                   ),
                   onPressed: () {
-                    String TaskTitle = controllerTaskTitle.text;
-                    String TaskSubTitle = controllerTaskSubTitle.text;
-                    addTask(TaskTitle, TaskSubTitle);
+                    String TaskTitle = controllerTaskTitle!.text;
+                    String TaskSubTitle = controllerTaskSubTitle!.text;
+                    editTask(TaskTitle, TaskSubTitle);
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    'اضافه کردن تسک',
+                    'ویرایش  تسک',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -191,7 +195,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 ),
                 SizedBox(
                   height: 20,
-                ),
+                )
               ],
             ),
           ),
@@ -200,13 +204,11 @@ class _AddTaskPageState extends State<AddTaskPage> {
     );
   }
 
-  addTask(String TaskTitle, String TaskSubTitle) {
-    taskBox.add(
-      Task(
-          title: TaskTitle,
-          subTitle: TaskSubTitle,
-          time: _time!,
-          taskType: getTaskTypeList()[_selectedTypeTaskItem]),
-    );
+  editTask(String TaskTitle, String TaskSubTitle) {
+    widget.task.title = TaskTitle;
+    widget.task.subTitle = TaskSubTitle;
+    widget.task.time = _time!;
+    widget.task.taskType = getTaskTypeList()[_selectedTypeTaskItem];
+    widget.task.save();
   }
 }

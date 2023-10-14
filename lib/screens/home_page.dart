@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:note_application/add_task_page.dart';
+import 'package:note_application/screens/add_task_page.dart';
 import 'package:note_application/constants/colors.dart';
-import 'package:note_application/task_type.dart';
-import 'package:note_application/task_widget.dart';
+import 'package:note_application/widget/task_widget.dart';
 
-import 'task.dart';
+import '../data/task.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -72,6 +71,30 @@ class _HomePageState extends State<HomePage> {
   Widget getTaskWidget(Task task) {
     return Dismissible(
         key: UniqueKey(),
+        background: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'حذف',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                'حذف',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
         onDismissed: (direction) {
           task.delete();
         },

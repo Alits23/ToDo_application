@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:note_application/edit_task.page.dart';
-import 'package:note_application/task.dart';
-
-import 'constants/colors.dart';
+import 'package:note_application/screens/edit_task.page.dart';
+import '../constants/colors.dart';
+import '../data/task.dart';
 
 class TaskWidget extends StatefulWidget {
   TaskWidget({super.key, required this.task});
@@ -62,17 +61,26 @@ class _TaskWidgetState extends State<TaskWidget> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Checkbox(
-                    value: isBoxChecked,
-                    onChanged: (value) {
-                      setState(
-                        () {
-                          isBoxChecked = !isBoxChecked;
-                          widget.task.isDone = isBoxChecked;
-                          widget.task.save();
-                        },
-                      );
-                    },
+                  //تغییر مقیاس
+                  Transform.scale(
+                    scale: 1.4,
+                    child: Checkbox(
+                      value: isBoxChecked,
+                      checkColor: Colors.white,
+                      activeColor: color1,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      onChanged: (value) {
+                        setState(
+                          () {
+                            isBoxChecked = !isBoxChecked;
+                            widget.task.isDone = isBoxChecked;
+                            widget.task.save();
+                          },
+                        );
+                      },
+                    ),
                   ),
                   Text(
                     widget.task.title.toString(),
