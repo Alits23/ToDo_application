@@ -86,6 +86,16 @@ class _TaskWidgetState extends State<TaskWidget> {
                     widget.task.title.toString(),
                     overflow: TextOverflow.ellipsis,
                     textDirection: TextDirection.rtl,
+                    style: TextStyle(
+                      decoration: (isBoxChecked)
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                      decorationColor: Colors.redAccent,
+                      decorationThickness: 2,
+                      decorationStyle: TextDecorationStyle.wavy,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
@@ -93,6 +103,14 @@ class _TaskWidgetState extends State<TaskWidget> {
                 widget.task.subTitle.toString(),
                 overflow: TextOverflow.ellipsis,
                 textDirection: TextDirection.rtl,
+                style: TextStyle(
+                  decoration: (isBoxChecked)
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
+                  decorationColor: Colors.redAccent,
+                  decorationThickness: 1,
+                  decorationStyle: TextDecorationStyle.wavy,
+                ),
               ),
               Spacer(),
               getTimeAndEdit(),
